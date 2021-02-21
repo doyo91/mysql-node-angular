@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
@@ -14,7 +15,7 @@ const helper = new JwtHelperService();
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.checkToken();
   }
 
@@ -40,6 +41,7 @@ export class AuthService {
     // TODO: create method logout in API
     localStorage.removeItem('token');
     this.loggedIn.next(false);
+    this.router.navigate(['/login']);
   }
 
   private checkToken(): void {
